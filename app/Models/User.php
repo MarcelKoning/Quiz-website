@@ -30,6 +30,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'username',
+        'email',
         'password',
         'remember_token',
     ];
@@ -42,6 +44,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
     public function isAdmin()
     {
