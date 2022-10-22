@@ -12,14 +12,26 @@ class Quiz extends Model
     protected $fillable = [
         'name',
         'description',
-        'type',
+        'type_id',
+        'category_id',
         'h_name',
         'h_value',
+        'timer',
     ];
 
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(QuizType::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(QuizCategory::class);
     }
 
     public function scopeSearchQuiz($query, $search)

@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quizzes', function (Blueprint $table) {
+        Schema::create('quiz_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->foreignId('type_id');
-            $table->foreignId('category_id');
-            $table->string('h_name');
-            $table->string('h_value');
-            $table->integer('timer');
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quizzes');
+        Schema::dropIfExists('quiz_categories');
     }
 };

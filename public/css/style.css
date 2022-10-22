@@ -144,6 +144,7 @@ a {
 	Contact CSS
 ========================================*/
 .contact-us {
+    margin-top: 20px;
     position: relative;
     background-color: #f6f9fc;
     padding-bottom: 0;
@@ -309,8 +310,8 @@ a {
     display: block;
 }
 
-.contact-us .form .form-group input {
-    height: 55px;
+.contact-us .form .form-group input, .contact-us .form .form-group select {
+    height: 40px;
     line-height: 55px;
     width: 100%;
     border: 1px solid #e6e2f5;
@@ -321,8 +322,12 @@ a {
     border-radius: 5px;
 }
 
+.contact-us .form .form-group span {
+    font-weight: bold;
+}
+
 .contact-us .form .form-group textarea {
-    height: 180px;
+    height: 75px;
     width: 100%;
     border: 1px solid #e6e2f5;
     padding: 15px 20px;
@@ -1213,4 +1218,33 @@ button.outline, button.button-secondary {
 #game-wrapper.clicking, #gameBarBox.clicking {
    width: 79%;
     margin: auto;
+}
+
+.error {
+    color: red;
+}
+
+#Questions {
+    overflow-y:scroll;
+    height: 215px;
+}
+
+#Questions .question .number {
+    width: 4%;
+    font-weight: bold;
+}
+
+.quizText {
+    font-weight: bold;
+}
+.quizValue {
+    margin-bottom: 15px;
+}
+
+.oddRow {
+    background-color: #EEEEEE;
+}
+
+.quiz-head {
+    margin-bottom: 20px;
 }
