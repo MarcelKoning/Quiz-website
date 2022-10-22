@@ -12,8 +12,9 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         // Remove this when the login system works
-        $user = User::where('id', 1)->first();
-        Auth::login($user);
+        // Uncomment if you have a user in db;
+//        $user = User::where('id', 1)->first();
+//        Auth::login($user);
 
        if(!empty($request->input('search')))
        {
