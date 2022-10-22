@@ -7,13 +7,13 @@
         <br />
         <div>
             <div id="gameHeaderWrapper">
-                <div id="gameBarBox" class="@if($quiz->type == "clicking" || $quiz->type == "Clicking") clicking @endif">
+                <div id="gameBarBox" class="@if($quiz->type_id == 2) clicking @endif">
 
                     <div id="playGameBar">
                         <div id="playGameBox">
 
                             <div id="playPadding">
-                                @if($quiz->type == "Typing" || $quiz->type == "typing")
+                                @if($quiz->type_id == 1)
                                     <button id="button-play" class="button-primary " onclick="startQuiz();">
                                         PLAY QUIZ
                                     </button>
@@ -161,7 +161,7 @@
             $borderCount = 0;
             $slotCount = 0;
         @endphp
-        @if($quiz->type == "Typing" || $quiz->tpye == "typing")
+        @if($quiz->type_id == 1)
             <div class="quiz-list">
                 <table id="gameTable">
                     <tbody>
@@ -191,7 +191,7 @@
                     </tbody>
                 </table>
             </div>
-        @elseif($quiz->type == "Clicking" || $quiz->type == "clicking")
+        @elseif($quiz->type_id == 2)
             <div id="game-wrapper" class="clicking">
                 <div id="questionbox">
                     <div id="currQuestion" class="question"></div>
@@ -246,7 +246,7 @@
         let divs;
         let removeClass = false;
 
-        @if($quiz->type == "clicking" || $quiz->type == "Clicking")
+        @if($quiz->type_id == 2)
             let arrayShuffled = @JSON($array);
         @endif
 
@@ -255,7 +255,7 @@
         {
             let display;
             let questionCount;
-            @if($quiz->type == "typing" || $quiz->type == "Typing")
+            @if($quiz->type_id == 1)
                 display = document.querySelector('.currentScore');
                 let table = document.getElementById("gameTable");
 
@@ -269,7 +269,7 @@
                 questionCount = rows.length;
                 display.textContent = currentScore + "/" + questionCount;
 
-            @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+            @elseif($quiz->type_id == 2)
                 display = document.querySelector('.currentScore');
                 let div = document.getElementById("game-wrapper");
 
@@ -292,7 +292,7 @@
                 clearInterval(intervalTimer);
 
                 startTimer();
-                @if($quiz->type == "typing" || $quiz->type == "Typing")
+                @if($quiz->type_id == 1)
                 pickSlot();
                 @endif
                 gameEnd();
@@ -360,7 +360,7 @@
             let currentSelectedValue = document.getElementsByClassName("valueactive");
             if(gameStarted === true && gameFinished === false) {
 
-                @if($quiz->type == "typing" || $quiz->type == "Typing")
+                @if($quiz->type_id == 1)
                 // get current selected td
                 let input = document.getElementById("gameinput");
                 let currGameName;
@@ -399,7 +399,7 @@
                     currentSelectedName.item(0).classList.remove("nameactive");
                     currentSelectedValue.item(0).classList.remove("valueactive");
                 }
-                @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+                @elseif($quiz->type_id == 2)
 
                 if (arrayShuffled.length >= arrayCurrentCount) {
                     arrayCurrentCount = 0;
@@ -420,7 +420,7 @@
             }
         }
 
-        @if($quiz->type == "clicking" || $quiz->type == "Clicking")
+        @if($quiz->type_id == 2)
         function pickPreviousSlot()
         {
             if(arrayCurrentCount === 0)
@@ -445,7 +445,7 @@
 
             startTimer(minutes, display);
 
-            @if($quiz->type == "typing" || $quiz->type == "Typing")
+            @if($quiz->type_id == 1)
                 // set styling of element
                 document.getElementById("answer-wrapper").style.display = null;
 
@@ -462,7 +462,7 @@
 
                 // focus on input field
                 document.getElementById("gameinput").focus();
-            @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+            @elseif($quiz->type_id == 2)
 
                 let array = @JSON($array);
                 // set styling of element
@@ -490,7 +490,7 @@
             if(gameStarted === true && gameFinished === false)
             {
 
-                @if($quiz->type == "typing" || $quiz->type == "Typing")
+                @if($quiz->type_id == 1)
                 let input = document.getElementById("gameinput");
                 let inputValue = input.value;
 
@@ -544,7 +544,7 @@
                     // update score
                     score();
                 }
-                @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+                @elseif($quiz->type_id == 2)
 
                 if (gameStarted === true) {
                     if (event.classList.contains("right")) {
@@ -589,7 +589,7 @@
 
             for(i = 0; i < array.length; i++)
             {
-                @if($quiz->type == "typing" || $quiz->type == "Typing")
+                @if($quiz->type_id == 1)
                  slot = document.getElementById("slot"+i);
 
                 // if slot has text do nothing. If slotId doens't have text add answer in red.
@@ -607,7 +607,7 @@
                 {
                     correct = "correct"
                 }
-                @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+                @elseif($quiz->type_id == 2)
                 slot = document.getElementById("slot"+i);
                 currentScore--;
                 // if slot has right class do nothing. If slotId doens't have correct class add class wrong in red.
@@ -628,7 +628,7 @@
                     correct = "correct"
                 }
                 @endif
-                @if($quiz->type == "typing" || $quiz->type == "Typing")
+                @if($quiz->type_id == 1)
                     type = "typing"
                 @else
                     type = "clicking"
@@ -669,7 +669,7 @@
         }
 
         // shuffle table questions when quiz type is typing
-        @if($quiz->type == "typing" || $quiz->type == "Typing")
+        @if($quiz->type_id == 1)
         function shuffleTable()
         {
             //get the parent table for convenience
@@ -704,7 +704,7 @@
                 arrayKey++
             }
         }
-        @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+        @elseif($quiz->type_id == 2)
 
         function shuffleDiv()
         {
@@ -732,11 +732,11 @@
         }
         @endif
 
-        @if($quiz->type == "typing" || $quiz->type == "Typing")
+        @if($quiz->type_id == 1)
             let minutes = 60 * {{ $quiz->timer }};
             let display = document.querySelector('#time');
             window.onload = shuffleTable(), score(), displayTimer(minutes, display);
-        @elseif($quiz->type == "clicking" || $quiz->type == "Clicking")
+        @elseif($quiz->type_id == 2)
             let minutes = 60 * {{ $quiz->timer }};
             let display = document.querySelector('#time');
             window.onload = shuffleDiv(), score(), displayTimer(minutes, display);
