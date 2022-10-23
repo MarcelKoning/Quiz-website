@@ -48,8 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+    // User Panel
+    Route::get('/user', [UserController::class, 'index'])->name('userPanel');
+
     // Role User
-    Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('userEdit');
     Route::get('/user/show/{user}', [UserController::class, 'show'])->name('userShow');
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('userUpdate');
