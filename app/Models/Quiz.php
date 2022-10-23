@@ -33,9 +33,4 @@ class Quiz extends Model
     {
         return $this->belongsTo(QuizCategory::class);
     }
-
-    public function scopeSearchQuiz($query, $search)
-    {
-        return $query->where('name', 'LIKE', '%' . $search . '%');
-    }
 }

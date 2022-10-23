@@ -12,9 +12,23 @@ use Illuminate\Support\Facades\Redirect;
 
 class QuizController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if(!empty($request->input('search')))
+        {
+            $search = $request->input('search');
+            $quizzes = Quiz::where(function ($query) use ($search) {
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%');
+            })
+            ->paginate(15);
+            $quizzes->appends(['search' => $search]);
+        }
+        else {
+            $quizzes = Quiz::paginate(15);
+        }
 
+        return view('quiz.index', compact('quizzes'));
     }
     /**
      * Display the specified resource.

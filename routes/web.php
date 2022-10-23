@@ -25,6 +25,8 @@ use App\Http\Controllers\AdminController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// Quiz
+Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
 Route::get('/quiz/{name}/{quiz}', [QuizController::class, 'show'])->name('playQuiz');
 Route::post('/quiz/{name}/{quiz}/store', [QuizController::class, 'store'])->name('playQuizStore');
 
