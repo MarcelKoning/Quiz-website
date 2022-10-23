@@ -36,10 +36,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">History</a>
+                    <a class="nav-link" href="{{ route('quiz') }}">Quiz</a>
                 </li>
                 @admin
                 <li class="nav-item">
