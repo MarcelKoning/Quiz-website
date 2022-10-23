@@ -3,9 +3,25 @@
 @section('content')
     <section class="container card-row-section">
         <h1>Quizzes</h1>
-        <form class="d-flex navbar-search col-4" method="get" action="{{ route('quiz') }}">
-            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+        <form class="d-flex navbar-search col-5" method="get" action="{{ route('quiz') }}">
+            <div class="row">
+                <div class="col-md-6">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                </div>
+                <div class="col-md-6 quizValue">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+                <?php $count = 0;?>
+                <span class="quizText">Categories</span>
+                @foreach($quizCategories as $quizCategory)
+                    <div class="col-md-4">
+                        <span>{{ $quizCategory->name }}</span>
+                        <input type="radio" name="category" value="{{ $quizCategory->id }}"/>
+                    </div>
+                    <?php $count++ ?>
+                @endforeach
+
+            </div>
         </form>
         <br/>
         <div class="container mt-5">
