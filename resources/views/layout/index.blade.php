@@ -47,6 +47,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('adminQuiz') }}">Admin Quiz</a>
                 </li>
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
+                @endauth
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>
