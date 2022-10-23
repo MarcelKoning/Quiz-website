@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\QuizCategory;
+use App\Models\QuizType;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Answer;
@@ -14,7 +16,21 @@ class QuizController extends Controller
 {
     public function index(Request $request)
     {
-        if(!empty($request->input('search')))
+        if(!empty($request->input('search')) && !empty($request->input('category')))
+        {
+            $search = $request->input('search');
+            $category = $request->input('category');
+            $quizzes = Quiz::whereHas('category', function ($q) use ($search, $category) {
+                $q->where('id', $category)
+                    ->where(function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('description', 'like', '%' . $search . '%');
+                    });
+            })
+                ->paginate(15);
+            $quizzes->appends(['category_id' => $category, 'search' => $search]);
+        }
+        elseif(!empty($request->input('search')))
         {
             $search = $request->input('search');
             $quizzes = Quiz::where(function ($query) use ($search) {
@@ -24,11 +40,23 @@ class QuizController extends Controller
             ->paginate(15);
             $quizzes->appends(['search' => $search]);
         }
+        elseif(!empty($request->input('category')))
+        {
+            $category = $request->input('category');
+            $quizzes = Quiz::where(function ($query) use ($category) {
+                $query->where('category_id', 'like', '%'.$category.'%');
+            })
+                ->paginate(15);
+            $quizzes->appends(['search' => $category]);
+        }
         else {
             $quizzes = Quiz::paginate(15);
         }
 
-        return view('quiz.index', compact('quizzes'));
+        $quizTypes = QuizType::all();
+        $quizCategories = QuizCategory::all();
+
+        return view('quiz.index', compact('quizzes',  'quizTypes','quizCategories'));
     }
     /**
      * Display the specified resource.
