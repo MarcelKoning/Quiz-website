@@ -1,4 +1,4 @@
-@extends('layout.index')
+@extends('layout.admin')
 
 @section('content')
     <section id="contact-us" class="contact-us section">
