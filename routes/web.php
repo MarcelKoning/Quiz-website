@@ -8,6 +8,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -55,6 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Role Admin
     Route::middleware('role:admin')->group(function () {
+
+        // Admin Panel
+        Route::get('/admin', [AdminController::class, 'index'])->name('adminPanel');
 
         // Admin Quiz
         Route::get('/admin/quiz', [AdminQuizController::class, 'index'])->name('adminQuiz');
