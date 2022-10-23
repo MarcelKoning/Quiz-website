@@ -8,26 +8,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class AdminUserController extends Controller
 {
     public function index(Request $request)
     {
-        $user = Auth::user();
+        if(!empty($request->input('search')))
+        {
+            $users = User::searchuser($request->input('search'))->get();
+        }
+        else {
+            $users = User::all();
+        }
 
-        return view('user.index', compact('user'));
+        return view('admin.user.index', compact('users'));
     }
 
     public function show(User $user)
     {
-        return view('user.show', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
 
     public function create()
     {
-
-        return view('user.create');
+        $roles = Role::all();
+        return view('admin.user.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -35,25 +40,25 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|max:255|unique:users',
             'email' => 'required|email|unique:users',
+            'role' => 'required',
             'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->uncompromised()],
         ]);
 
         $user = new User;
         $user->username = $request->input('username');
         $user->email = $request->input('email');
-        $user->role_id = 2;
+        $user->role_id = $request->input('role');
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        Auth::loginUsingId($user->id);
-
-        return redirect('home');
+        return redirect('admin/user');
     }
 
 
     public function edit(User $user)
     {
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.user.edit', compact('user','roles'));
     }
 
     public function update(Request $request, User $user)
@@ -66,10 +71,11 @@ class UserController extends Controller
 
         $user->username = $request->input('username');
         $user->email = $request->input('email');
+        $user->role_id = $request->input('role');
         $user->save();
 
 
-        return redirect('user.index');
+        return redirect('admin/user');
     }
 
     public function delete()
