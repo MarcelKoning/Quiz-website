@@ -36,29 +36,19 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
+                    <a class="nav-link" href="{{ route('userEdit', $user) }}">Profile settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">History</a>
+                    <a class="nav-link" href="#">Quiz History</a>
                 </li>
-                @admin
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('adminPanel') }}">Admin Panel</a>
+                    <a class="nav-link" href="#">Subscription</a>
                 </li>
-                @endadmin
                 @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('userPanel') }}">User Panel</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                     </li>
                 @endauth
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
-                @endguest
             </ul>
         </div>
     </div>
@@ -69,3 +59,4 @@
 @yield('content')
 </body>
 </html>
+
