@@ -3,43 +3,97 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\QuizCategory;
+use App\Models\QuizType;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
-use App\Models\QuizType;
-use App\Models\QuizCategory;
+use App\Models\Answer;
+use App\Models\Room;
+use App\Models\UserRoom;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
-
-class AdminQuizController extends Controller
+class UserQuizController extends Controller
 {
     public function index(Request $request)
     {
-        if(!empty($request->input('search')))
-        {
-            $quizzes = Quiz::searchquiz($request->input('search'))->get();
-        }
-        else {
-            $quizzes = Quiz::all();
+        $user = Auth::user();
+
+        if (!empty($request->input('search')) && !empty($request->input('category'))) {
+            $search = $request->input('search');
+            $category = $request->input('category');
+            $quizzes = Quiz::where('user_id', $user->id)
+                ->whereHas('category', function ($q) use ($search, $category) {
+                    $q->where('id', $category)
+                        ->where(function ($query) use ($search) {
+                            $query->where('name', 'like', '%' . $search . '%')
+                                ->orWhere('description', 'like', '%' . $search . '%');
+                        });
+                })
+                ->paginate(15);
+            $quizzes->appends(['category_id' => $category, 'search' => $search]);
+        } elseif (!empty($request->input('search'))) {
+            $search = $request->input('search');
+            $quizzes = Quiz::where('user_id', $user->id)
+                ->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                })
+                ->paginate(15);
+            $quizzes->appends(['search' => $search]);
+        } elseif (!empty($request->input('category'))) {
+            $category = $request->input('category');
+            $quizzes = Quiz::where('user_id', $user->id)
+                ->where(function ($query) use ($category) {
+                    $query->where('category_id', 'like', '%' . $category . '%');
+                })
+                ->paginate(15);
+            $quizzes->appends(['search' => $category]);
+        } else {
+            $quizzes = Quiz::where('user_id', $user->id)->paginate(15);
         }
 
-        return view('admin.quiz.index', compact('quizzes'));
+        $quizTypes = QuizType::all();
+        $quizCategories = QuizCategory::all();
+
+        return view('user.quiz.index', compact('user', 'quizzes', 'quizTypes', 'quizCategories'));
     }
 
-    public function show(Quiz $quiz)
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\Quiz $quiz
+     * @return \Illuminate\Http\Response
+     */
+    public function show($name, Quiz $quiz)
     {
-        $questions = $quiz->questions()->get();
-        $quizType = $quiz->type()->get();
-        $quizCategory = $quiz->category()->get();
+        // User show quiz will be a preview of how the quiz will look like when you play it.
 
-        return view('admin.quiz.show', compact('quiz', 'questions','quizType', 'quizCategory'));
+        $allQuestions = Question::where('quiz_id', $quiz->id)->get();
+
+        $array = array();
+        foreach ($allQuestions as $question) {
+            $array[] = $question;
+        }
+
+        $totalAmount = count($array);
+
+        $equalAmount = ceil($totalAmount / 4);
+
+        $questions[] = array_chunk($array, $equalAmount);
+
+
+        return view('quiz.show', compact('quiz', 'questions', 'totalAmount', 'array'));
     }
 
     public function create()
     {
+        $user = Auth::user();
+
         $quizTypes = QuizType::all();
         $quizCategories = QuizCategory::all();
 
-        return view('admin.quiz.create', compact('quizTypes', 'quizCategories'));
+        return view('user.quiz.create', compact('user','quizTypes', 'quizCategories'));
     }
 
     public function store(Request $request)
@@ -87,17 +141,19 @@ class AdminQuizController extends Controller
             $question->save();
         }
 
-        return redirect('admin/quiz');
-    }
+        return redirect('user/quiz');
 
+    }
 
     public function edit(Quiz $quiz)
     {
+        $user = Auth::user();
+
         $quizTypes = QuizType::all();
         $quizCategories = QuizCategory::all();
         $questions = $quiz->questions()->get();
 
-        return view('admin.quiz.edit', compact('quiz', 'questions', 'quizTypes', 'quizCategories'));
+        return view('user.quiz.edit', compact('user', 'quiz', 'questions', 'quizTypes', 'quizCategories'));
     }
 
     public function update(Request $request, Quiz $quiz)
@@ -155,7 +211,7 @@ class AdminQuizController extends Controller
                 $question->save();
             }
         }
-        return redirect('admin/quiz');
+        return redirect('user/quiz');
     }
 
     public function delete()

@@ -1248,3 +1248,7 @@ button.outline, button.button-secondary {
 .quiz-head {
     margin-bottom: 20px;
 }
+
+.clickable-row {
+    cursor: pointer;
+}
