@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserQuizController;
 
 
 /*
@@ -41,23 +42,28 @@ Route::middleware('role:user')->group(function () {
 
 });
 
-
-
-// Admin panel
-
 Route::group(['middleware' => 'auth'], function () {
 
     // Logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // User Panel
-    Route::get('/user', [UserController::class, 'index'])->name('userPanel');
+    Route::group(['middleware' => 'AuthResource'], function () {
 
-    // Role User
-    Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('userEdit');
-    Route::get('/user/show/{user}', [UserController::class, 'show'])->name('userShow');
-    Route::post('/user/update/{user}', [UserController::class, 'update'])->name('userUpdate');
+        // User Panel
+        Route::get('/user', [UserController::class, 'index'])->name('userPanel');
 
+        // Role User
+        Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('userEdit');
+        Route::get('/user/show/{user}', [UserController::class, 'show'])->name('userShow');
+        Route::post('/user/update/{user}', [UserController::class, 'update'])->name('userUpdate');
+
+        // User Quiz
+        Route::get('/user/quiz', [UserQuizController::class, 'index'])->name('userQuiz');
+        Route::get('/user/quiz/create', [UserQuizController::class, 'create'])->name('userCreateQuiz');
+        Route::get('/user/quiz/edit/{quiz}', [UserQuizController::class, 'edit'])->name('userEditQuiz');
+        Route::post('/user/quiz/store', [UserQuizController::class, 'store'])->name('userQuizStore');
+        Route::post('/user/quiz/update/{quiz}', [UserQuizController::class, 'update'])->name('userQuizUpdate');
+    });
     // Role Admin
     Route::middleware('role:admin')->group(function () {
 
