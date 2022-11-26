@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->foreignId("user_id");
-            $table->foreignId("room_id");
+            $table->foreignId("user_room_id");
             $table->string('answer');
-            $table->string('is_correct');
+            $table->boolean('is_correct');
             $table->timestamps();
         });
     }

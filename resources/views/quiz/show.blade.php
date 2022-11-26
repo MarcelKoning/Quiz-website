@@ -4,7 +4,7 @@
     <section class="container">
         <h1>{{$quiz->name}}</h1>
         <p>{{ $quiz->description }}</p>
-        <br />
+        <br/>
         <div>
             <div id="gameHeaderWrapper">
                 <div id="gameBarBox" class="@if($quiz->type_id == 2) clicking @endif">
@@ -21,10 +21,14 @@
                             </div>
 
                             <div id="answer-wrapper" style="display:none">
-                                <button id="previousButton" class="button-secondary" onclick="pickPreviousSlot();">prev</button>
+                                <button id="previousButton" class="button-secondary" onclick="pickPreviousSlot();">
+                                    prev
+                                </button>
                                 <div id="answerBox">
                                     <label id="answerText"><span id="currgamename"></span>:</label>
-                                    <input type="text" id="gameinput" class="answerEntry narrow js-bound" oninput="checkGameInput(this);" autocapitalize="off" spellcheck="true" autocomplete="off" autocorrect="off">
+                                    <input type="text" id="gameinput" class="answerEntry narrow js-bound"
+                                           oninput="checkGameInput(this);" autocapitalize="off" spellcheck="true"
+                                           autocomplete="off" autocorrect="off">
                                 </div>
                                 <button id="nextButton" class="button-secondary" onclick="pickSlot();">next</button>
                             </div>
@@ -54,13 +58,17 @@
 
                         <div id="scoreBox" class="dataBox">
                             <div class="dropdown-menu-container" id="quiz-score-dropdown">
-                                <button class="unformatted dropdown-menu-trigger" data-trigger-for="score-box-dropdown-menu" aria-label="Toggle quiz menu">Score</button>
+                                <button class="unformatted dropdown-menu-trigger"
+                                        data-trigger-for="score-box-dropdown-menu" aria-label="Toggle quiz menu">Score
+                                </button>
                                 <div class="dropdown-menu" id="score-box-dropdown-menu" style="display: none;">
-                                    <button class="unformatted dropdown-item score-controls-btn active" data-value="numeric" aria-label="Show numerical score">
+                                    <button class="unformatted dropdown-item score-controls-btn active"
+                                            data-value="numeric" aria-label="Show numerical score">
                                         <div class="item-icon"></div>
                                         <div class="item-content">Numerical</div>
                                     </button>
-                                    <button class="unformatted dropdown-item score-controls-btn" data-value="percentage" aria-label="Show percentage score">
+                                    <button class="unformatted dropdown-item score-controls-btn" data-value="percentage"
+                                            aria-label="Show percentage score">
                                         <div class="item-icon"></div>
                                         <div class="item-content">Percentage</div>
                                     </button>
@@ -77,13 +85,17 @@
 
                         <div id="timeBox" class="dataBox">
                             <div class="dropdown-menu-container" id="quiz-time-dropdown">
-                                <button class="unformatted dropdown-menu-trigger" data-trigger-for="time-box-dropdown-menu" aria-label="Toggle quiz menu">Timer</button>
+                                <button class="unformatted dropdown-menu-trigger"
+                                        data-trigger-for="time-box-dropdown-menu" aria-label="Toggle quiz menu">Timer
+                                </button>
                                 <div class="dropdown-menu" id="time-box-dropdown-menu" style="display: none;">
-                                    <button class="unformatted dropdown-item timer-controls-btn active" data-value="timer" aria-label="Use default timer">
+                                    <button class="unformatted dropdown-item timer-controls-btn active"
+                                            data-value="timer" aria-label="Use default timer">
                                         <div class="item-icon"></div>
                                         <div class="item-content">Default Timer</div>
                                     </button>
-                                    <button class="unformatted dropdown-item timer-controls-btn" data-value="stopwatch" aria-label="Use stopwatch timer">
+                                    <button class="unformatted dropdown-item timer-controls-btn" data-value="stopwatch"
+                                            aria-label="Use stopwatch timer">
                                         <div class="item-icon"></div>
                                         <div class="item-content">Stopwatch</div>
                                     </button>
@@ -111,7 +123,8 @@
 
                     <div class="reckon-bar-wrapper">
                         <div class="label">Next Quiz</div>
-                        <a id="next-quiz-link" class="reckon-bar-action" title="Play next quiz: Japanese in English" href="/games/Ignis_Umbrae/english_etymology_japanese?playlist=speaking-japanese&amp;creator=SporcleEXP&amp;pid=1f54b49b6j">
+                        <a id="next-quiz-link" class="reckon-bar-action" title="Play next quiz: Japanese in English"
+                           href="/games/Ignis_Umbrae/english_etymology_japanese?playlist=speaking-japanese&amp;creator=SporcleEXP&amp;pid=1f54b49b6j">
                             <div class="icon"></div>
                             <div class="screen-reader-text">Link to next quiz in quiz playlist</div>
                         </a>
@@ -178,8 +191,10 @@
 
                                         @foreach($question as $elementRow => $element)
                                             <tr class="question">
-                                                <td class="d_name" id="name{{$nameCount++}}" onclick="pickSlot(this)">{{ $element->question }}</td>
-                                                <td class="d_value" id="slot{{$slotCount++}}" onclick="pickSlot(this)"></td>
+                                                <td class="d_name" id="name{{$nameCount++}}"
+                                                    onclick="pickSlot(this)">{{ $element->question }}</td>
+                                                <td class="d_value" id="slot{{$slotCount++}}"
+                                                    onclick="pickSlot(this)"></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -197,13 +212,18 @@
                     <div id="currQuestion" class="question"></div>
 
                     <div id="skip" style="visibility:hidden">
-                        <button id="pickprev" class="button-secondary" onclick="pickPreviousSlot();" alt="Click to skip to previous" name="Skip">Prev</button>
-                        <button id="picknext" class="button-secondary" onclick="pickSlot();" alt="Click to skip to next" name="Skip">Next</button>
+                        <button id="pickprev" class="button-secondary" onclick="pickPreviousSlot();"
+                                alt="Click to skip to previous" name="Skip">Prev
+                        </button>
+                        <button id="picknext" class="button-secondary" onclick="pickSlot();" alt="Click to skip to next"
+                                name="Skip">Next
+                        </button>
                     </div>
                     @foreach($questions as $row => $innerArray)
                         @foreach($innerArray as $innerRow => $question)
                             @foreach($question as $elementRow => $element)
-                                <div id="name{{$nameCount++}}" style="display:none;" data-url="">{{ $element->question }}<br></div>
+                                <div id="name{{$nameCount++}}" style="display:none;"
+                                     data-url="">{{ $element->question }}<br></div>
                             @endforeach
                         @endforeach
                     @endforeach
@@ -221,7 +241,8 @@
                         @foreach($innerArray as $innerRow => $question)
                             @foreach($question as $elementRow => $element)
                                 <div id="border{{$borderCount}}" class="borderOff">
-                                    <div id="slot{{$borderCount++}}" class="answer" onclick="checkGameInput(this)" style="visibility:hidden">
+                                    <div id="slot{{$borderCount++}}" class="answer" onclick="checkGameInput(this)"
+                                         style="visibility:hidden">
                                         <div class="text"></div>
                                     </div>
                                 </div>
@@ -231,9 +252,10 @@
                 </div>
             </div>
         @endif
-        <form method="post" id="gameStatsForm" action="{{ route("playQuizStore", [$quiz->name, $quiz])  }}" style="display: none">
+        <form method="post" id="gameStatsForm" action="{{ route("playQuizStore", [$quiz->name, $quiz])  }}"
+              style="display: none">
             @csrf
-            <input type="text" id="inputArray" name="array" value="" />
+            <input type="text" id="inputArray" name="array" value=""/>
         </form>
     </section>
 
@@ -246,46 +268,48 @@
         let divs;
         let removeClass = false;
 
+        // count total minutes
+        let duration = 60 * {{ $quiz->timer }};
+        let timers = duration, minutes1, seconds;
+
         @if($quiz->type_id == 2)
-            let arrayShuffled = @JSON($array);
+        let arrayShuffled = @JSON($array);
         @endif
 
         // score
-        function score()
-        {
+        function score() {
             let display;
             let questionCount;
             @if($quiz->type_id == 1)
                 display = document.querySelector('.currentScore');
-                let table = document.getElementById("gameTable");
+            let table = document.getElementById("gameTable");
 
-                //1. get all rows
-                let rowsCollection = table.querySelectorAll("tr.question");
+            //1. get all rows
+            let rowsCollection = table.querySelectorAll("tr.question");
 
-                //2. convert to array
-                let rows = Array.from(rowsCollection)
+            //2. convert to array
+            let rows = Array.from(rowsCollection)
 
-                //3. count
-                questionCount = rows.length;
-                display.textContent = currentScore + "/" + questionCount;
+            //3. count
+            questionCount = rows.length;
+            display.textContent = currentScore + "/" + questionCount;
 
             @elseif($quiz->type_id == 2)
                 display = document.querySelector('.currentScore');
-                let div = document.getElementById("game-wrapper");
+            let div = document.getElementById("game-wrapper");
 
-                //1. get all rows
-                let divCollection = div.querySelectorAll("div.borderOff");
+            //1. get all rows
+            let divCollection = div.querySelectorAll("div.borderOff");
 
-                //2. convert to array
-                let divs = Array.from(divCollection)
+            //2. convert to array
+            let divs = Array.from(divCollection)
 
-                //3. count
-                questionCount = divs.length;
-                display.textContent = currentScore + "/" + questionCount;
+            //3. count
+            questionCount = divs.length;
+            display.textContent = currentScore + "/" + questionCount;
             @endif
 
-            if(currentScore === questionCount || gameFinished === true)
-            {
+            if (currentScore === questionCount || gameFinished === true) {
                 gameFinished = true;
                 gameStarted = false;
 
@@ -296,16 +320,13 @@
                 pickSlot();
                 @endif
                 gameEnd();
-            }
-            else
-            {
+            } else {
                 currentScore++;
             }
         }
 
         // timer
-        function displayTimer(duration, display)
-        {
+        function displayTimer(duration, display) {
             let timer = duration, minutes, seconds;
 
             minutes = parseInt(timer / 60, 10);
@@ -318,21 +339,15 @@
         }
 
         // countdown timer
-        function startTimer()
-        {
+        function startTimer() {
             timer();
 
-            if(gameStarted === true)
-            {
+            if (gameStarted === true) {
                 intervalTimer = setInterval(timer, 1000)
             }
         }
 
-        // count total minutes
-        let duration = 60 * {{ $quiz->timer }};
-        let timers = duration, minutes1, seconds;
-
-        function timer () {
+        function timer() {
 
             let display = document.querySelector('#time');
 
@@ -354,11 +369,10 @@
             }
         }
 
-        function pickSlot(element)
-        {
+        function pickSlot(element) {
             let currentSelectedName = document.getElementsByClassName("nameactive");
             let currentSelectedValue = document.getElementsByClassName("valueactive");
-            if(gameStarted === true && gameFinished === false) {
+            if (gameStarted === true && gameFinished === false) {
 
                 @if($quiz->type_id == 1)
                 // get current selected td
@@ -366,8 +380,7 @@
                 let currGameName;
 
 
-                if (gameStarted === true)
-                {
+                if (gameStarted === true) {
                     if (currentSelectedName.length !== 0 && currentSelectedValue.length !== 0) {
                         // remove class from current selected td
                         currentSelectedName.item(0).classList.remove("nameactive");
@@ -407,11 +420,8 @@
                 document.getElementById("currQuestion").textContent = arrayShuffled[arrayCurrentCount]["question"];
 
                 @endif
-            }
-            else
-            {
-                if(removeClass === false)
-                {
+            } else {
+                if (removeClass === false) {
                     currentSelectedName.item(0).classList.remove("nameactive");
                     currentSelectedValue.item(0).classList.remove("valueactive");
                     removeClass = true;
@@ -421,10 +431,8 @@
         }
 
         @if($quiz->type_id == 2)
-        function pickPreviousSlot()
-        {
-            if(arrayCurrentCount === 0)
-            {
+        function pickPreviousSlot() {
+            if (arrayCurrentCount === 0) {
                 arrayCurrentCount = arrayShuffled.length;
             }
             document.getElementById("currQuestion").textContent = arrayShuffled[arrayCurrentCount]["question"];
@@ -432,8 +440,7 @@
         }
         @endif
 
-        function startQuiz()
-        {
+        function startQuiz() {
             gameStarted = true;
             // count total minutes
             let minutes = 60 * {{ $quiz->timer }} - 1;
@@ -446,49 +453,46 @@
             startTimer(minutes, display);
 
             @if($quiz->type_id == 1)
-                // set styling of element
-                document.getElementById("answer-wrapper").style.display = null;
+            // set styling of element
+            document.getElementById("answer-wrapper").style.display = null;
 
-                // get first tr in table
-                let table = document.getElementById("gameTable");
+            // get first tr in table
+            let table = document.getElementById("gameTable");
 
-                let rowsCollection = table.querySelectorAll("tr.question");
+            let rowsCollection = table.querySelectorAll("tr.question");
 
-                let row = rowsCollection[0];
+            let row = rowsCollection[0];
 
-                let nameElement = row.children.item(0);
+            let nameElement = row.children.item(0);
 
-                pickSlot(nameElement);
+            pickSlot(nameElement);
 
-                // focus on input field
-                document.getElementById("gameinput").focus();
+            // focus on input field
+            document.getElementById("gameinput").focus();
             @elseif($quiz->type_id == 2)
 
-                let array = @JSON($array);
-                // set styling of element
-                document.getElementById("playbuttonbox").style = "display:none";
+            let array = @JSON($array);
+            // set styling of element
+            document.getElementById("playbuttonbox").style = "display:none";
 
-                let divElement = document.getElementsByClassName("answer");
-                let i;
+            let divElement = document.getElementsByClassName("answer");
+            let i;
 
 
-                for(i = 0; i < divElement.length; i++)
-                {
+            for (i = 0; i < divElement.length; i++) {
 
-                    let divNumber = divs[i].id.match(/\d+/)[0];
+                let divNumber = divs[i].id.match(/\d+/)[0];
 
-                    divElement.item(i).style = "visibility:visible";
-                    divElement.item(i).firstElementChild.textContent = array[divNumber]["correct_answer"];
-                }
+                divElement.item(i).style = "visibility:visible";
+                divElement.item(i).firstElementChild.textContent = array[divNumber]["correct_answer"];
+            }
 
-                pickSlot(arrayShuffled);
+            pickSlot(arrayShuffled);
             @endif
         }
 
-        function checkGameInput(event)
-        {
-            if(gameStarted === true && gameFinished === false)
-            {
+        function checkGameInput(event) {
+            if (gameStarted === true && gameFinished === false) {
 
                 @if($quiz->type_id == 1)
                 let input = document.getElementById("gameinput");
@@ -577,8 +581,7 @@
             }
         }
 
-        function gameEnd()
-        {
+        function gameEnd() {
             let array = @json($array);
             let i;
             let questionArray = @json($array);
@@ -586,55 +589,50 @@
             let correct;
             let type;
             let slot;
+            let answer;
+            let slotAnswer;
 
-            for(i = 0; i < array.length; i++)
-            {
+            for (i = 0; i < array.length; i++) {
+                // get the slot id
+                slot = document.getElementById("slot" + i);
+
+                // get the answer of the slot
+                slotAnswer = slot.textContent;
+
                 @if($quiz->type_id == 1)
-                 slot = document.getElementById("slot"+i);
 
-                // if slot has text do nothing. If slotId doens't have text add answer in red.
-                if(slot.innerText == "")
-                {
+                // if slot has text do nothing. If slotId doesn't have text add answer in red.
+                if (slot.innerText == "") {
                     slot.classList.add("in_correct");
                     slot.textContent = array[i]["correct_answer"];
                 }
 
-                if(slot.classList.contains("in_correct"))
-                {
-                   correct = "incorrect"
-                }
-                else
-                {
-                    correct = "correct"
-                }
-                @elseif($quiz->type_id == 2)
-                slot = document.getElementById("slot"+i);
-                currentScore--;
-                // if slot has right class do nothing. If slotId doens't have correct class add class wrong in red.
-                if (slot.classList.contains("right"))
-                {
+                // if slot has the class correct, set correct value to true else false.
+                correct = !slot.classList.contains("in_correct");
 
-                }
-                else
-                {
+                @elseif($quiz->type_id == 2)
+                    slot = document.getElementById("slot" + i);
+                currentScore--;
+
+                // if slot has right class do nothing. If slotId doesn't have correct class add class wrong in red.
+                if (slot.classList.contains("right")) {
+
+                } else {
                     slot.classList.add("wrong");
                 }
 
-                if (slot.classList.contains("wrong"))
-                {
-                    correct = "incorrect"
-                } else
-                {
-                    correct = "correct"
-                }
+                // if slot has the class right, set correct value to true else false.
+                correct = !slot.classList.contains("wrong");
                 @endif
-                @if($quiz->type_id == 1)
+
+                    @if($quiz->type_id == 1)
                     type = "typing"
                 @else
                     type = "clicking"
                 @endif
+
                 let obj = {
-                    question: array[i], answer: slot.textContent, is_correct: correct, timer: timers,
+                    question: array[i], answer: slotAnswer, is_correct: correct, timer: timers,
                     type: type, capacity: 1, score: currentScore,
                 };
 
@@ -649,9 +647,8 @@
 
         }
 
-        function shuffle(array)
-        {
-            let currentIndex = array.length,  randomIndex;
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
 
             // While there remain elements to shuffle.
             while (currentIndex != 0) {
@@ -670,8 +667,7 @@
 
         // shuffle table questions when quiz type is typing
         @if($quiz->type_id == 1)
-        function shuffleTable()
-        {
+        function shuffleTable() {
             //get the parent table for convenience
             let table = document.getElementById("gameTable");
 
@@ -695,19 +691,17 @@
 
             //5. add back to the DOM
             let arrayKey = 0
-            for(let i = 0; i < rows.length; i += equalCount)
-            {
+            for (let i = 0; i < rows.length; i += equalCount) {
                 const chunk = rows.slice(i, i + equalCount);
 
-                for(const row of chunk)
-                innertable[arrayKey].appendChild(row);
+                for (const row of chunk)
+                    innertable[arrayKey].appendChild(row);
                 arrayKey++
             }
         }
         @elseif($quiz->type_id == 2)
 
-        function shuffleDiv()
-        {
+        function shuffleDiv() {
             //get the parent div for convenience
             let div = document.getElementById("game-wrapper");
 
@@ -723,8 +717,7 @@
             shuffle(divs);
 
             //5. add back to the DOM
-            for(let i = 0; i < divs.length; i++)
-            {
+            for (let i = 0; i < divs.length; i++) {
                 innerDiv.appendChild(divs[i]);
             }
 
@@ -733,17 +726,16 @@
         @endif
 
         @if($quiz->type_id == 1)
-            let minutes = 60 * {{ $quiz->timer }};
-            let display = document.querySelector('#time');
-            window.onload = shuffleTable(), score(), displayTimer(minutes, display);
+        let minutes = 60 * {{ $quiz->timer }};
+        let display = document.querySelector('#time');
+        window.onload = shuffleTable(), score(), displayTimer(minutes, display);
         @elseif($quiz->type_id == 2)
-            let minutes = 60 * {{ $quiz->timer }};
-            let display = document.querySelector('#time');
-            window.onload = shuffleDiv(), score(), displayTimer(minutes, display);
+        let minutes = 60 * {{ $quiz->timer }};
+        let display = document.querySelector('#time');
+        window.onload = shuffleDiv(), score(), displayTimer(minutes, display);
         @endif
 
-        function submitForm()
-        {
+        function submitForm() {
             document.getElementById("gameStatsForm").submit();
         }
     </script>

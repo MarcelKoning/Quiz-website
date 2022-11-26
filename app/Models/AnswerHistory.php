@@ -13,5 +13,6 @@ class AnswerHistory extends Model
         'user_id',
         'question_id',
         'answer_id',
+        'room_id',
     ];
 }

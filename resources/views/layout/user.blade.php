@@ -44,6 +44,9 @@
                     <a class="nav-link" href="{{ route('userQuiz') }}">Quiz</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('userQuizHistory') }}">History</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Subscription</a>
                 </li>
                 @auth

@@ -11,12 +11,14 @@ class Answer extends Model
 
     protected $fillable = [
         'question_id',
+        'user_id',
+        'user_room_id',
         'answer',
         'is_correct',
     ];
 
-    public function room()
+    public function userRoom()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(UserRoom::class);
     }
 }
