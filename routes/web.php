@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserQuizController;
+use App\Http\Controllers\UserQuizHistoryController;
 
 
 /*
@@ -52,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
         // User Panel
         Route::get('/user', [UserController::class, 'index'])->name('userPanel');
 
-        // Role User
+        // User
         Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('userEdit');
         Route::get('/user/show/{user}', [UserController::class, 'show'])->name('userShow');
         Route::post('/user/update/{user}', [UserController::class, 'update'])->name('userUpdate');
@@ -63,7 +64,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/user/quiz/edit/{quiz}', [UserQuizController::class, 'edit'])->name('userEditQuiz');
         Route::post('/user/quiz/store', [UserQuizController::class, 'store'])->name('userQuizStore');
         Route::post('/user/quiz/update/{quiz}', [UserQuizController::class, 'update'])->name('userQuizUpdate');
+
+        // User Quiz History
+        Route::get('/user/quiz/history', [UserQuizHistoryController::class, 'index'])->name('userQuizHistory');
+        Route::get('/user/quiz/history/show/{userRoom}', [UserQuizHistoryController::class, 'show'])->name('userShowQuizHistory');
     });
+
     // Role Admin
     Route::middleware('role:admin')->group(function () {
 

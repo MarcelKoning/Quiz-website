@@ -11,17 +11,18 @@ class Room extends Model
 
     protected $fillable = [
         'name',
+        'quiz_id',
         'capacity',
         'type',
     ];
 
     public function userRoom()
     {
-        return $this->hasOne(userRoom::class);
+        return $this->hasMany(userRoom::class);
     }
 
-    public function answers()
+    public function quiz()
     {
-        return $this->hasMany(Answer::class);
+        return $this->belongsTo(Quiz::class);
     }
 }
